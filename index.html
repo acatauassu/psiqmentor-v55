@@ -234,6 +234,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    overflow: hidden;
   }
 
   /* Patient info bar */
@@ -1075,17 +1076,18 @@
 
   /* ─── Avatar Video Container ──────────────────── */
   #avatarContainer {
-    padding: 16px 24px 8px;
+    padding: 10px 24px 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
+    z-index: 50;
   }
   #avatarVideo {
     width: 100%;
-    max-width: 480px;
+    max-width: 360px;
     aspect-ratio: 16 / 9;
     margin: 0 auto;
     border-radius: 12px;
@@ -1101,9 +1103,9 @@
   }
   #avatarStatus {
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-muted);
-    margin-top: 6px;
+    margin-top: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2303,13 +2305,21 @@ async function connectAvatar() {
   }
 }
 
+// Queue for mic transcriptions that arrive while a message is being sent
+let micQueue = [];
+
 // Handle events from LiveAvatar via data channel
 function handleAvatarEvent(event) {
   switch (event.event_type) {
     case "user.transcription":
       // Student spoke via mic — auto-send the transcription to chat
       if (event.text && event.text.trim()) {
-        sendMessage(event.text.trim());
+        if (sending) {
+          // Queue the message — will be sent after current one finishes
+          micQueue.push(event.text.trim());
+        } else {
+          sendMessage(event.text.trim());
+        }
       }
       break;
 
@@ -2321,6 +2331,20 @@ function handleAvatarEvent(event) {
     case "avatar.speak_ended":
       avatarSpeaking = false;
       updateAvatarStatus("connected", "Avatar conectado");
+      // Re-enable listening after avatar finishes speaking
+      if (livekitRoom && avatarConnected && micEnabled) {
+        try {
+          livekitRoom.localParticipant.publishData(
+            new TextEncoder().encode(JSON.stringify({
+              event_type: "avatar.start_listening",
+              session_id: sessionIdLA,
+            })),
+            { topic: "agent-control" }
+          );
+        } catch (e) {
+          console.warn("Could not send start_listening:", e);
+        }
+      }
       break;
 
     case "session.stopped":
@@ -2350,6 +2374,17 @@ function sendToAvatar(text) {
   if (!cleanText) return;
 
   try {
+    // Temporarily stop listening while avatar speaks to avoid echo
+    if (micEnabled) {
+      livekitRoom.localParticipant.publishData(
+        new TextEncoder().encode(JSON.stringify({
+          event_type: "avatar.stop_listening",
+          session_id: sessionIdLA,
+        })),
+        { topic: "agent-control" }
+      );
+    }
+
     livekitRoom.localParticipant.publishData(
       new TextEncoder().encode(JSON.stringify({
         event_type: "avatar.speak_text",
@@ -2358,6 +2393,8 @@ function sendToAvatar(text) {
       })),
       { topic: "agent-control" }
     );
+    // Note: avatar.start_listening is sent automatically in handleAvatarEvent
+    // when avatar.speak_ended fires
   } catch (err) {
     console.error("Error sending to avatar:", err);
   }
@@ -2385,6 +2422,17 @@ micBtn.addEventListener("click", async () => {
   try {
     await livekitRoom.localParticipant.setMicrophoneEnabled(micEnabled);
     micBtn.classList.toggle("active", micEnabled);
+
+    // Tell LiveAvatar to start/stop listening for voice input
+    const listenEvent = micEnabled ? "avatar.start_listening" : "avatar.stop_listening";
+    livekitRoom.localParticipant.publishData(
+      new TextEncoder().encode(JSON.stringify({
+        event_type: listenEvent,
+        session_id: sessionIdLA,
+      })),
+      { topic: "agent-control" }
+    );
+    console.log(`Mic ${micEnabled ? "ON" : "OFF"} — sent ${listenEvent}`);
   } catch (err) {
     console.error("Mic toggle error:", err);
     micEnabled = false;
@@ -2506,6 +2554,12 @@ async function sendMessage(text) {
     sending = false;
     sendBtn.disabled = false;
     messageInput.focus();
+
+    // Process queued mic transcriptions
+    if (micQueue.length > 0) {
+      const nextMsg = micQueue.shift();
+      setTimeout(() => sendMessage(nextMsg), 200);
+    }
   }
 }
 
