@@ -1062,7 +1062,7 @@ async def create_liveavatar_token(req: LiveAvatarTokenRequest):
             },
             json=token_payload,
         )
-        if resp.status_code != 200:
+        if resp.status_code not in (200, 201):
             raise HTTPException(
                 status_code=502,
                 detail=f"LiveAvatar API error ({resp.status_code}): {resp.text}",
@@ -1087,7 +1087,7 @@ async def start_liveavatar(req: LiveAvatarStartRequest):
                 "authorization": f"Bearer {req.session_token}",
             },
         )
-        if resp.status_code != 200:
+        if resp.status_code not in (200, 201):
             raise HTTPException(
                 status_code=502,
                 detail=f"LiveAvatar start error ({resp.status_code}): {resp.text}",
