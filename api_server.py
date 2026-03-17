@@ -998,7 +998,8 @@ async def chat_stream(req: ChatRequest):
                 audio_b64 = b64mod.b64encode(audio_bytes).decode("ascii")
                 yield f"data: {json.dumps({'type': 'audio', 'audio_b64': audio_b64})}\n\n"
             else:
-                yield f"data: {json.dumps({'type': 'audio_error', 'detail': 'Sem di\u00e1logo para TTS'})}\n\n"
+                no_dialog_msg = json.dumps({'type': 'audio_error', 'detail': 'Sem diálogo para TTS'})
+                yield f"data: {no_dialog_msg}\n\n"
         except Exception as e:
             yield f"data: {json.dumps({'type': 'audio_error', 'detail': str(e)}, ensure_ascii=False)}\n\n"
 
