@@ -1,0 +1,3523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsiqMentor v5.5 — Avatar Interativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --bg-card: #ffffff;
+    --bg-chat: #f0efeb;
+    --text-primary: #1a1a1a;
+    --text-secondary: #5a5a5a;
+    --text-muted: #8a8a8a;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --patient-bg: #e8e6e1;
+    --student-bg: #2563eb;
+    --student-text: #ffffff;
+    --border: #e5e4e0;
+    --border-focus: #2563eb;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Source Serif 4', Georgia, serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* ─── Header ─────────────────────────────────── */
+  .header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .header-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: -2px;
+  }
+
+  /* ─── Screens ────────────────────────────────── */
+  .screen { display: none; }
+  .screen.active { display: flex; flex-direction: column; min-height: calc(100vh - 69px); }
+
+  /* ─── Welcome Screen ─────────────────────────── */
+  #welcome-screen {
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    gap: 32px;
+  }
+  .welcome-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+  .welcome-card h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .welcome-card > p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* ─── Prerequisites Box ────────────────────── */
+  .prerequisites-box {
+    text-align: left;
+    margin: 20px 0 28px;
+    padding: 20px;
+    background: var(--bg-chat);
+    border-radius: var(--radius-md);
+  }
+  .prerequisites-box h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .prerequisites-box li {
+    margin: 8px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    list-style: none;
+    padding-left: 24px;
+    position: relative;
+  }
+  .prerequisites-box li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover {
+    background: #1d4ed8;
+    box-shadow: var(--shadow-md);
+  }
+  .btn-primary:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+  .btn-danger {
+    background: var(--danger);
+    color: white;
+  }
+  .btn-danger:hover {
+    background: #b91c1c;
+  }
+
+  /* ─── Chat Screen ────────────────────────────── */
+  #chat-screen {
+    flex: 1;
+  }
+  .chat-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100vh - 69px);
+  }
+  .chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Patient info bar */
+  .patient-bar {
+    padding: 12px 24px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .patient-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .patient-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--patient-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .patient-name {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .patient-detail {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Messages area */
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .message {
+    max-width: 72%;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .message.patient {
+    background: var(--patient-bg);
+    color: var(--text-primary);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .message.patient .behavior {
+    color: #2563eb;
+    font-style: italic;
+  }
+  .message.student {
+    background: var(--student-bg);
+    color: var(--student-text);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .message.system {
+    align-self: center;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 13px;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  /* ─── Spinner (reused) ────────────────── */
+  .tts-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .typing-indicator {
+    display: none;
+    align-self: flex-start;
+    padding: 12px 16px;
+    background: var(--patient-bg);
+    border-radius: var(--radius-md);
+    border-bottom-left-radius: 4px;
+  }
+  .typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: typingBounce 1.4s infinite ease-in-out;
+  }
+  .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* Input area */
+  .input-area {
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+  .input-area textarea {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    min-height: 42px;
+    max-height: 120px;
+    background: var(--bg);
+    color: var(--text-primary);
+    transition: border-color 0.15s;
+  }
+  .input-area textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+  }
+  .send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .send-btn:hover { background: #1d4ed8; }
+  .send-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+  .send-btn svg { width: 18px; height: 18px; }
+
+  /* ─── Patient phase indicator ─────────────────── */
+  .patient-phase {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    background: var(--bg-chat);
+    border-radius: 20px;
+  }
+
+  /* ─── Chat Bottom Bar ─── */
+  .chat-bottom-bar {
+    padding: 10px 24px 12px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .end-hint-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: var(--warning-light);
+    color: #92400e;
+    border-radius: 20px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .end-hint-banner strong {
+    color: #78350f;
+    letter-spacing: 0.05em;
+  }
+  .eem-hint-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: #dbeafe;
+    color: #1e40af;
+    border-radius: 20px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .eem-hint-banner strong {
+    color: #1e3a8a;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── EEM Screen ────────────────────────────── */
+  #eem-screen {
+    padding: 24px;
+    gap: 24px;
+  }
+  .eem-layout {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .eem-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .eem-panel h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.01em;
+  }
+  .eem-summary-content {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-height: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+  }
+  .eem-summary-content strong {
+    color: var(--text-primary);
+  }
+  .eem-summary-loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+  }
+  .eem-summary-loading .spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .eem-form-group {
+    margin-bottom: 16px;
+  }
+  .eem-form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .eem-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 48px;
+    background: var(--bg);
+    color: var(--text-primary);
+    transition: border-color 0.15s;
+  }
+  .eem-form-group textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  }
+  .eem-form-group textarea::placeholder {
+    color: var(--text-muted);
+  }
+  .eem-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .btn-encerrar-sim {
+    width: 100%;
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  .eem-header-bar {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .eem-header-bar h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .eem-header-bar p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+
+  /* ─── Start Button (random) ─────────────────── */
+  .btn-start-random {
+    padding: 16px 36px;
+    font-size: 17px;
+    border-radius: var(--radius-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-start-random:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+  .btn-start-random:active {
+    transform: translateY(0);
+  }
+  @keyframes diceRoll {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .btn-start-random.rolling svg {
+    animation: diceRoll 0.6s ease-in-out;
+  }
+
+  /* ─── Post-Simulation Screen ────────────────── */
+  #post-screen,
+  #thankyou-screen {
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+  .post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+  .post-card .post-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--success-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--success);
+  }
+  .post-card h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .post-card > p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .post-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .post-actions .btn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 15px;
+    border-radius: var(--radius-md);
+  }
+  .post-actions .btn-nova {
+    margin-top: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+  .post-actions .btn-nova:hover {
+    background: var(--bg-chat);
+    color: var(--text-primary);
+  }
+
+  /* ─── Survey Screen ──────────────────────────── */
+  #survey-screen {
+    align-items: center;
+    padding: 40px 24px;
+  }
+  .survey-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+  }
+  .survey-card h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .survey-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: var(--bg-chat);
+    border-radius: var(--radius-md);
+  }
+  .survey-instruction {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* Scale legend */
+  .scale-legend {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding: 12px 16px;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: #1e40af;
+  }
+  .scale-legend span {
+    white-space: nowrap;
+  }
+  .scale-legend .sep {
+    color: #93c5fd;
+  }
+
+  /* Likert question block */
+  .likert-question {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.15s;
+  }
+  .likert-question.error {
+    border-color: var(--danger);
+    background: var(--danger-light);
+  }
+  .likert-question .q-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .likert-question .q-num {
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  .likert-options {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .likert-options label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .likert-options label input[type="radio"] {
+    display: none;
+  }
+  .likert-options label .radio-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    background: var(--bg-card);
+  }
+  .likert-options label:hover .radio-circle {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .likert-options label input[type="radio"]:checked + .radio-circle {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  .likert-options label .radio-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Open question */
+  .open-question {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .open-question .q-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .open-question textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 80px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    transition: border-color 0.15s;
+  }
+  .open-question textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+  }
+
+  /* Survey actions */
+  .survey-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: flex-end;
+  }
+  .survey-actions .btn {
+    min-width: 160px;
+  }
+
+  /* Survey success */
+  .survey-success {
+    display: none;
+    text-align: center;
+    padding: 40px 24px;
+  }
+  .survey-success.active {
+    display: block;
+  }
+  .survey-success .success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--success-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--success);
+  }
+  .survey-success h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .survey-success p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .survey-form-content {}
+
+  /* ─── Report Screen ──────────────────────────── */
+  #report-screen {
+    padding: 48px 24px;
+    align-items: center;
+  }
+  .report-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+  }
+  .report-card h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .report-score-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin: 24px 0;
+    padding: 20px;
+    background: var(--bg-chat);
+    border-radius: var(--radius-md);
+  }
+  .report-big-score {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .report-big-score.high { color: var(--success); }
+  .report-big-score.medium { color: var(--warning); }
+  .report-big-score.low { color: var(--danger); }
+  .report-score-detail { font-size: 14px; color: var(--text-secondary); }
+  .report-score-detail strong { color: var(--text-primary); }
+
+  .report-section {
+    margin: 24px 0;
+  }
+  .report-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Report tables */
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+  .report-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: var(--bg-chat);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+  }
+  .report-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .report-table tr:last-child td {
+    border-bottom: none;
+  }
+  .report-table tr:hover td {
+    background: rgba(0,0,0,0.015);
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .status-pill.investigated {
+    background: var(--success-light);
+    color: var(--success);
+  }
+  .status-pill.missing {
+    background: #f1f5f9;
+    color: var(--text-muted);
+  }
+
+  /* Quality dimension cards */
+  .quality-dim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .quality-dim-card {
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+  .quality-dim-card .dim-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .quality-dim-card .dim-classification {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+  .dim-classification.adequado { background: var(--success-light); color: var(--success); }
+  .dim-classification.parcial { background: var(--warning-light); color: var(--warning); }
+  .dim-classification.insuficiente { background: var(--danger-light); color: var(--danger); }
+  .dim-classification.nao-aplicavel { background: #f1f5f9; color: var(--text-muted); }
+  .quality-dim-card .dim-obs {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Global assessment box */
+  .global-assessment {
+    background: var(--bg-chat);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .global-assessment p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Tips */
+  .tip-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm);
+    margin: 8px 0;
+    font-size: 14px;
+    color: #1e40af;
+    line-height: 1.5;
+  }
+  .tip-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+
+  /* ─── Report Actions ─────────────────────────── */
+  .report-actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .report-actions .btn {
+    min-width: 180px;
+  }
+
+  /* ─── Footer ─────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  footer a {
+    color: var(--text-muted);
+    text-decoration: underline;
+  }
+
+  /* ─── Avatar Video Container ──────────────────── */
+  #avatarContainer {
+    padding: 16px 24px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+  }
+  #avatarVideo {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a1a;
+    position: relative;
+  }
+  #avatarStream {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #avatarStatus {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .avatar-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .avatar-status-dot.connected {
+    background: var(--success);
+  }
+  .avatar-status-dot.offline {
+    background: var(--text-muted);
+  }
+  .avatar-status-dot.connecting {
+    background: var(--warning);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ─── Mic Button ────────────────────────────────── */
+  .mic-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .mic-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+  .mic-btn.active {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: white;
+    animation: micPulse 1.5s ease-in-out infinite;
+  }
+  .mic-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  @keyframes micPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+  }
+  .mic-btn svg { width: 18px; height: 18px; }
+
+  /* ─── Avatar Error Banner ───────────────────────── */
+  .avatar-error-banner {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: var(--danger-light);
+    color: #991b1b;
+    border-radius: 20px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 8px 24px;
+  }
+  .avatar-error-banner.active {
+    display: flex;
+  }
+
+  /* ─── Helena Profile Card (Welcome) ─────────────── */
+  .helena-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--bg-chat);
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .helena-profile .avatar-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #dbeafe, #ede9fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .helena-profile .info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .helena-profile .info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ─── Responsive ─────────────────────────────── */
+  @media (max-width: 768px) {
+    .message { max-width: 88%; }
+    .welcome-card { padding: 24px; }
+    .report-card { padding: 24px; }
+    .survey-card { padding: 24px; }
+    .post-card { padding: 24px; }
+    .header h1 { font-size: 17px; }
+    .report-score-row { flex-direction: column; text-align: center; }
+    .chat-bottom-bar { padding: 8px 16px 10px; }
+    .end-hint-banner { font-size: 12px; padding: 6px 14px; }
+    .eem-hint-banner { font-size: 12px; padding: 6px 14px; }
+    .eem-layout { grid-template-columns: 1fr; }
+    .eem-header-bar h2 { font-size: 20px; }
+    .quality-dim-grid { grid-template-columns: 1fr; }
+    .likert-options { gap: 4px; }
+    .likert-options label .radio-circle { width: 30px; height: 30px; font-size: 12px; }
+    .likert-options label .radio-label { font-size: 10px; }
+    .survey-actions { flex-direction: column; }
+    .survey-actions .btn { width: 100%; }
+    .admin-dashboard { padding: 16px; }
+    .admin-cards { grid-template-columns: 1fr; }
+    .admin-table-wrap { font-size: 12px; }
+    .admin-login-card { padding: 24px; margin: 24px; }
+  }
+
+  /* ─── Admin Link ─────────────────────────────── */
+  .admin-link {
+    color: var(--text-muted);
+    font-size: 12px;
+    opacity: 0.4;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+  }
+  .admin-link:hover { opacity: 0.7; }
+
+  /* ─── Admin Login ────────────────────────────── */
+  #admin-login-screen {
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+  .admin-login-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+  .admin-login-card h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .admin-login-card .subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+  .admin-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 14px;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    background: var(--bg);
+  }
+  .admin-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  .admin-error {
+    color: var(--danger);
+    font-size: 13px;
+    margin-bottom: 12px;
+    display: none;
+  }
+  .admin-error.active { display: block; }
+  .admin-back-link {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .admin-back-link:hover { color: var(--text-secondary); }
+
+  /* ─── Admin Dashboard ───────────────────────── */
+  #admin-screen {
+    flex-direction: column;
+  }
+  .admin-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .admin-header h2 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .admin-header .admin-logout {
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+  }
+  .admin-header .admin-logout:hover { color: var(--danger); }
+  .admin-dashboard {
+    padding: 24px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .admin-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .admin-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .admin-stat:last-child { border-bottom: none; }
+  .admin-stat .label { color: var(--text-secondary); }
+  .admin-stat .value { font-weight: 600; color: var(--text-primary); }
+  .status-ok {
+    color: var(--success);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .status-ok::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .status-error {
+    color: var(--danger);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .status-error::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--danger);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .admin-btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .admin-btn-row .btn {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+  .admin-api-result {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    display: none;
+  }
+  .admin-api-result.active { display: block; }
+  .admin-api-result.ok {
+    background: var(--success-light);
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+  .admin-api-result.error {
+    background: var(--danger-light);
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+
+  /* Survey data section */
+  .admin-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+  }
+  .admin-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-table-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+  }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .admin-table th {
+    text-align: left;
+    padding: 8px 10px;
+    background: var(--bg-chat);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  .admin-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+  .admin-table tr:nth-child(even) td {
+    background: var(--bg);
+  }
+  .admin-table tr:hover td {
+    background: var(--accent-light);
+  }
+  .admin-empty {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .admin-footer {
+    text-align: center;
+    padding: 24px;
+  }
+  .admin-footer a {
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .admin-footer a:hover { color: var(--accent); }
+
+  .admin-transtorno-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .admin-transtorno-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+  }
+  .admin-transtorno-item .name { color: var(--text-secondary); }
+  .admin-transtorno-item .count { font-weight: 600; color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<!-- ═══ Header ═══════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-left">
+    <div class="logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a5 5 0 0 1 5 5c0 2-1.5 3.5-3 4.5V14H10v-2.5C8.5 10.5 7 9 7 7a5 5 0 0 1 5-5z"/>
+        <path d="M10 14v3a2 2 0 0 0 4 0v-3"/>
+        <line x1="12" y1="20" x2="12" y2="22"/>
+      </svg>
+    </div>
+    <div>
+      <h1>PsiqMentor v5.5</h1>
+      <div class="header-subtitle">Avatar Interativo &middot; Ensino em Psiquiatria &middot; CESUPA</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ Welcome Screen ═══════════════════════════════════════════ -->
+<div id="welcome-screen" class="screen active">
+  <div class="welcome-card">
+    <h2>Simulação com Avatar Interativo</h2>
+    <p>
+      Treine sua habilidade em anamnese psiquiátrica com a paciente virtual
+      <strong>Helena</strong>, que se apresenta como avatar interativo com vídeo
+      e voz em tempo real. Você pode conversar por texto ou por microfone.
+    </p>
+
+    <div class="prerequisites-box">
+      <h3>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Pré-requisitos para esta simulação
+      </h3>
+      <ul>
+        <li>Conhecimento dos critérios diagnósticos do DSM-5-TR para Transtornos de Ansiedade</li>
+        <li>Noções de técnica de anamnese psiquiátrica</li>
+        <li>Familiaridade com o Exame do Estado Mental (EEM)</li>
+        <li>Conhecimento sobre triagem de risco suicida</li>
+        <li>Saber diferenciar diagnósticos no espectro da ansiedade</li>
+      </ul>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+      Este é um ambiente de <strong>treinamento</strong>. Não substitui a prática clínica real.
+    </p>
+
+    <!-- Helena Profile Card -->
+    <div class="helena-profile">
+      <div class="avatar-icon">👩</div>
+      <div class="info">
+        <h4>Helena, 40 anos</h4>
+        <p>Dona de casa &middot; Casada, três filhos adolescentes</p>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-start-random" id="startBtn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 10l4.553-2.276A1 1 0 0 1 21 8.618v6.764a1 1 0 0 1-1.447.894L15 14M5 18h8a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z"/>
+      </svg>
+      Consultar Helena (Avatar)
+    </button>
+
+  </div>
+  <a class="admin-link" id="adminLink">Admin</a>
+</div>
+
+<!-- ═══ Admin Login Screen ═════════════════════════════════════════ -->
+<div id="admin-login-screen" class="screen">
+  <div class="admin-login-card">
+    <h2>Painel Administrativo</h2>
+    <p class="subtitle">PsiqMentor · Acesso restrito</p>
+    <div class="admin-error" id="adminLoginError">Credenciais inválidas</div>
+    <input type="text" class="admin-input" id="adminUser" placeholder="Usuário" autocomplete="off">
+    <input type="password" class="admin-input" id="adminPass" placeholder="Senha" autocomplete="off">
+    <button class="btn btn-primary" style="width:100%" id="adminLoginBtn">Entrar</button>
+    <a class="admin-back-link" id="adminLoginBack">← Voltar ao PsiqMentor</a>
+  </div>
+</div>
+
+<!-- ═══ Admin Dashboard Screen ═════════════════════════════════════ -->
+<div id="admin-screen" class="screen">
+  <div class="admin-header">
+    <h2>Painel Administrativo — PsiqMentor</h2>
+    <button class="admin-logout" id="adminLogoutBtn">Sair</button>
+  </div>
+
+  <div class="admin-dashboard">
+    <!-- Health + Sessions cards -->
+    <div class="admin-cards">
+      <div class="admin-card">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Saúde do Sistema
+        </h3>
+        <div class="admin-stat">
+          <span class="label">Versão</span>
+          <span class="value" id="adminVersion">--</span>
+        </div>
+        <div class="admin-stat">
+          <span class="label">Chave Anthropic</span>
+          <span class="value" id="adminApiKey">--</span>
+        </div>
+        <div class="admin-stat">
+          <span class="label">Sessões ativas</span>
+          <span class="value" id="adminActiveSessions">--</span>
+        </div>
+        <div class="admin-stat">
+          <span class="label">Total de sessões</span>
+          <span class="value" id="adminTotalSessions">--</span>
+        </div>
+        <div class="admin-btn-row">
+          <button class="btn btn-secondary" id="adminTestApiBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Testar API Anthropic
+          </button>
+        </div>
+        <div class="admin-api-result" id="adminApiResult"></div>
+      </div>
+
+      <div class="admin-card">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Pesquisa de Satisfação
+        </h3>
+        <div class="admin-stat">
+          <span class="label">Total de respostas</span>
+          <span class="value" id="adminSurveyTotal">--</span>
+        </div>
+        <div id="adminTranstornoBreakdown"></div>
+        <div class="admin-btn-row">
+          <button class="btn btn-secondary" id="adminExportBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar CSV
+          </button>
+          <button class="btn btn-danger" id="adminClearBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Limpar Dados de Teste
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Survey Data Table -->
+    <div class="admin-section">
+      <h3>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+        Dados das Respostas
+      </h3>
+      <div id="adminSurveyTable"></div>
+    </div>
+
+    <div class="admin-footer">
+      <a id="adminBackToApp">← Voltar ao PsiqMentor</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Chat Screen ══════════════════════════════════════════════ -->
+<div id="chat-screen" class="screen">
+  <div class="chat-layout">
+    <div class="chat-main">
+      <!-- Patient bar -->
+      <div class="patient-bar">
+        <div class="patient-info">
+          <div class="patient-avatar">🧑</div>
+          <div>
+            <div class="patient-name" id="patientName">—</div>
+            <div class="patient-detail" id="patientDetail">—</div>
+          </div>
+        </div>
+        <div class="patient-phase" id="patientPhase">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="phaseLabel">Simulação em andamento</span>
+        </div>
+      </div>
+
+      <!-- Avatar Video Container -->
+      <div id="avatarContainer" style="display:none;">
+        <div id="avatarVideo">
+          <video id="avatarStream" autoplay playsinline></video>
+        </div>
+        <div id="avatarStatus">
+          <span class="avatar-status-dot connecting"></span>
+          Conectando avatar...
+        </div>
+      </div>
+
+      <!-- Avatar Error Banner -->
+      <div class="avatar-error-banner" id="avatarErrorBanner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span id="avatarErrorText">Erro ao conectar avatar. Modo texto ativado.</span>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages" id="messagesContainer">
+        <div class="typing-indicator" id="typingIndicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <textarea id="messageInput" placeholder="Inicie o atendimento com o(a) paciente..." rows="1"></textarea>
+        <button class="mic-btn" id="micBtn" disabled title="Microfone (disponível quando avatar conectar)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+        <button class="send-btn" id="sendBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+      <div class="chat-bottom-bar">
+        <div class="eem-hint-banner" id="eemHintBanner">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+            <line x1="9" y1="12" x2="15" y2="12"/>
+            <line x1="9" y1="16" x2="15" y2="16"/>
+          </svg>
+          Digite <strong>EEM</strong> para ir para o Exame do Estado Mental
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EEM Screen ════════════════════════════════════════════════ -->
+<div id="eem-screen" class="screen">
+  <div class="eem-header-bar">
+    <h2>Exame do Estado Mental</h2>
+    <p>Preencha o formulário com base nas suas observações durante a entrevista.</p>
+  </div>
+
+  <div class="eem-layout">
+    <!-- Left: AI observational summary -->
+    <div class="eem-panel">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        Dados Observacionais da Entrevista
+      </h3>
+      <div id="eemSummaryContent" class="eem-summary-content">
+        <div class="eem-summary-loading">
+          <div class="spinner"></div>
+          <p>Analisando a conversa...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Student form -->
+    <div class="eem-panel">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        Sua Avaliação do EEM
+      </h3>
+      <form id="eemForm">
+        <div class="eem-form-group">
+          <label for="eem-aparencia">1. Aparência Geral</label>
+          <textarea id="eem-aparencia" placeholder="Vestiário, higiene pessoal, postura, constituição física..." rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-psicomotor">2. Comportamento Psicomotor</label>
+          <textarea id="eem-psicomotor" placeholder="Agitação, lentificação, inquietação, gestos, movimentos repetitivos..." rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-humor">3. Humor</label>
+          <textarea id="eem-humor" placeholder="Humor referido pelo paciente (eutímico, deprimido, ansioso, irritável...)" rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-afeto">4. Afeto</label>
+          <textarea id="eem-afeto" placeholder="Congruência com o humor, amplitude, reatividade, estabilidade..." rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-pensamento-forma">5. Pensamento — Forma</label>
+          <textarea id="eem-pensamento-forma" placeholder="Curso, velocidade e continuidade do pensamento (acelerado, lentificado, circunstancial...)" rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-pensamento-conteudo">6. Pensamento — Conteúdo</label>
+          <textarea id="eem-pensamento-conteudo" placeholder="Delírios, ideias supervalorizadas, ruminações, fobias, obsessões, ideação suicida..." rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-sensopercepcao">7. Sensopercepção</label>
+          <textarea id="eem-sensopercepcao" placeholder="Alucinações (visuais, auditivas, etc.), ilusões, despersonalização, desrealização..." rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-cognicao">8. Cognição</label>
+          <textarea id="eem-cognicao" placeholder="Orientação, atenção, memória, inteligência estimada, capacidade de abstração..." rows="2"></textarea>
+        </div>
+        <div class="eem-form-group">
+          <label for="eem-juizo">9. Juízo Crítico e Insight</label>
+          <textarea id="eem-juizo" placeholder="Consciência da doença, capacidade de julgamento, insight sobre a condição..." rows="2"></textarea>
+        </div>
+        <div class="eem-actions">
+          <button type="submit" class="btn btn-primary btn-encerrar-sim" id="eemSubmitBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Encerrar Simulação
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Post-Simulation Screen ═══════════════════════════════════ -->
+<div id="post-screen" class="screen">
+  <div class="post-card">
+    <div class="post-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    </div>
+    <h2>Simulação Concluída</h2>
+    <p>Para melhoria contínua do PSIQMENTOR, queremos saber da sua opinião. Antes de gerar o relatório, responda à nossa pesquisa.</p>
+    <div class="post-actions">
+      <button class="btn btn-primary" id="goSurveyBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+          <line x1="9" y1="12" x2="15" y2="12"/>
+          <line x1="9" y1="16" x2="15" y2="16"/>
+          <line x1="9" y1="8" x2="11" y2="8"/>
+        </svg>
+        Responder à Pesquisa
+      </button>
+      <button class="btn btn-secondary" id="goReportBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Gerar Relatório
+      </button>
+      <button class="btn btn-nova" id="postRestartBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+        Nova Simulação
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Thank You Screen (post-survey) ═══════════════════════════ -->
+<div id="thankyou-screen" class="screen">
+  <div class="post-card">
+    <div class="post-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </div>
+    <h2>Obrigado!</h2>
+    <p>Suas respostas vão nos ajudar a melhorar nosso produto.</p>
+    <div class="post-actions">
+      <button class="btn btn-primary" id="tyReportBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Gerar Relatório
+      </button>
+      <button class="btn btn-nova" id="tyRestartBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+        Nova Simulação
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Survey Screen ════════════════════════════════════════════ -->
+<div id="survey-screen" class="screen">
+  <div class="survey-card">
+    <h2>Pesquisa de Satisfação</h2>
+
+    <!-- Form content (hidden when success shown) -->
+    <div class="survey-form-content" id="surveyFormContent">
+      <div class="survey-desc">
+        Você está sendo convidado(a) a responder esta pesquisa sobre sua experiência em realizar uma consulta psiquiátrica simulada com paciente de inteligência artificial, representando um quadro de transtorno de ansiedade. O objetivo é avaliar a sua percepção sobre a utilidade pedagógica, o realismo e a contribuição dessa atividade para o aprendizado da entrevista psiquiátrica. O preenchimento leva cerca de 3 a 5 minutos. Suas respostas serão analisadas de forma conjunta, sem identificação individual.
+      </div>
+
+      <p class="survey-instruction">
+        Considere sua experiência na consulta psiquiátrica simulada com paciente de IA. Marque o quanto você concorda com cada afirmação abaixo.
+      </p>
+
+      <div class="scale-legend">
+        <span><strong>1</strong> = Discordo totalmente</span>
+        <span class="sep">·</span>
+        <span><strong>2</strong> = Discordo parcialmente</span>
+        <span class="sep">·</span>
+        <span><strong>3</strong> = Nem concordo nem discordo</span>
+        <span class="sep">·</span>
+        <span><strong>4</strong> = Concordo parcialmente</span>
+        <span class="sep">·</span>
+        <span><strong>5</strong> = Concordo totalmente</span>
+      </div>
+
+      <form id="surveyForm">
+        <!-- Q1 -->
+        <div class="likert-question" id="q1-block" data-q="Q1">
+          <div class="q-text"><span class="q-num">1.</span> A simulação com paciente de IA me ajudou a treinar a abordagem inicial e o acolhimento em uma consulta psiquiátrica.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q1" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q1" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q1" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q1" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q1" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="likert-question" id="q2-block" data-q="Q2">
+          <div class="q-text"><span class="q-num">2.</span> A experiência contribuiu para que eu percebesse melhor a importância de estabelecer rapport e vínculo logo no início da entrevista.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q2" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q2" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q2" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q2" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q2" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="likert-question" id="q3-block" data-q="Q3">
+          <div class="q-text"><span class="q-num">3.</span> A atividade me ajudou a organizar melhor a sequência lógica da consulta psiquiátrica, sem pular etapas importantes.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q3" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q3" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q3" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q3" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q3" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="likert-question" id="q4-block" data-q="Q4">
+          <div class="q-text"><span class="q-num">4.</span> A simulação favoreceu meu treinamento para investigar os sintomas ansiosos com mais profundidade, incluindo tempo de evolução, desencadeantes e impacto funcional.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q4" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q4" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q4" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q4" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q4" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="likert-question" id="q5-block" data-q="Q5">
+          <div class="q-text"><span class="q-num">5.</span> A experiência me ajudou a compreender melhor a diferença entre perguntas abertas e perguntas excessivamente fechadas ou mecânicas.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q5" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q5" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q5" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q5" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q5" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="likert-question" id="q6-block" data-q="Q6">
+          <div class="q-text"><span class="q-num">6.</span> A atividade contribuiu para meu aprendizado sobre como abordar temas sensíveis, como sofrimento emocional e pensamentos de morte, de forma mais cuidadosa e adequada.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q6" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q6" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q6" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q6" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q6" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="likert-question" id="q7-block" data-q="Q7">
+          <div class="q-text"><span class="q-num">7.</span> A simulação me ajudou a perceber a importância de observar e investigar elementos do Exame do Estado Mental durante a entrevista.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q7" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q7" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q7" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q7" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q7" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="likert-question" id="q8-block" data-q="Q8">
+          <div class="q-text"><span class="q-num">8.</span> O caso clínico simulado apresentou realismo suficiente para tornar a experiência relevante para minha formação em Psiquiatria.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q8" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q8" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q8" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q8" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q8" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="likert-question" id="q9-block" data-q="Q9">
+          <div class="q-text"><span class="q-num">9.</span> Após essa experiência, sinto-me mais preparado(a) para conduzir uma anamnese psiquiátrica inicial em contexto de ensino supervisionado.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q9" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q9" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q9" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q9" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q9" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="likert-question" id="q10-block" data-q="Q10">
+          <div class="q-text"><span class="q-num">10.</span> Considero que o uso de pacientes simulados por IA é uma estratégia válida e útil para o ensino de entrevista psiquiátrica na graduação em Medicina.</div>
+          <div class="likert-options">
+            <label><input type="radio" name="Q10" value="1"><div class="radio-circle">1</div><div class="radio-label">Discordo totalmente</div></label>
+            <label><input type="radio" name="Q10" value="2"><div class="radio-circle">2</div><div class="radio-label">Discordo parcialmente</div></label>
+            <label><input type="radio" name="Q10" value="3"><div class="radio-circle">3</div><div class="radio-label">Nem concor. nem discor.</div></label>
+            <label><input type="radio" name="Q10" value="4"><div class="radio-circle">4</div><div class="radio-label">Concordo parcialmente</div></label>
+            <label><input type="radio" name="Q10" value="5"><div class="radio-circle">5</div><div class="radio-label">Concordo totalmente</div></label>
+          </div>
+        </div>
+
+        <!-- Q11 (open) -->
+        <div class="open-question">
+          <div class="q-text"><span class="q-num">11.</span> Na sua opinião, qual foi a principal contribuição dessa consulta simulada com IA para o seu aprendizado? <em style="color:var(--text-muted);font-weight:400;">(opcional)</em></div>
+          <textarea id="surveyQ11" name="Q11" placeholder="Escreva sua resposta..."></textarea>
+        </div>
+
+        <!-- Q12 (open) -->
+        <div class="open-question">
+          <div class="q-text"><span class="q-num">12.</span> O que poderia ser melhorado nessa experiência para torná-la mais útil na formação médica? <em style="color:var(--text-muted);font-weight:400;">(opcional)</em></div>
+          <textarea id="surveyQ12" name="Q12" placeholder="Escreva sua resposta..."></textarea>
+        </div>
+
+        <div class="survey-actions">
+          <button type="button" class="btn btn-secondary" id="surveyBackBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Voltar
+          </button>
+          <button type="submit" class="btn btn-primary" id="surveySubmitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Enviar Pesquisa
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success message (shown after submit) -->
+    <div class="survey-success" id="surveySuccess">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <h3>Obrigado pela sua participação!</h3>
+      <p>Suas respostas foram registradas com sucesso.<br>Retornando ao menu em <span id="returnCountdown">3</span> segundos...</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Report Screen ════════════════════════════════════════════ -->
+<div id="report-screen" class="screen">
+  <div class="report-card" id="reportContent">
+    <!-- Filled dynamically -->
+  </div>
+  <div class="report-actions" id="reportActions">
+    <button class="btn btn-primary" id="downloadPdfBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Baixar Relatório em PDF
+    </button>
+    <button class="btn btn-secondary" id="reportBackBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar
+    </button>
+  </div>
+</div>
+
+<!-- ═══ Footer ═══════════════════════════════════════════════════ -->
+<footer>
+  PsiqMentor &middot; Produto educacional — Mestrado em Ensino em Saúde &middot; CESUPA &middot;
+  <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/livekit-client@2/dist/livekit-client.umd.min.js"></script>
+<script>
+const API = "__PORT_8000__".startsWith("__") ? "" : "__PORT_8000__";
+
+// ─── State ──────────────────────────────────────────────────────
+let sessionId = null;
+let sending = false;
+let lastReportData = null;
+let adminToken = null;
+let eemCompleted = false;
+
+// ─── LiveAvatar State ───────────────────────────────────────────
+let livekitRoom = null;
+let sessionIdLA = null;    // LiveAvatar session ID
+let avatarConnected = false;
+let micEnabled = false;
+let avatarSpeaking = false;
+
+// ─── DOM Elements ───────────────────────────────────────────────
+const welcomeScreen      = document.getElementById("welcome-screen");
+const chatScreen         = document.getElementById("chat-screen");
+const eemScreen          = document.getElementById("eem-screen");
+const postScreen         = document.getElementById("post-screen");
+const thankYouScreen     = document.getElementById("thankyou-screen");
+const surveyScreen       = document.getElementById("survey-screen");
+const reportScreen       = document.getElementById("report-screen");
+const adminLoginScreen   = document.getElementById("admin-login-screen");
+const adminScreen        = document.getElementById("admin-screen");
+
+const messagesContainer  = document.getElementById("messagesContainer");
+const messageInput       = document.getElementById("messageInput");
+const sendBtn            = document.getElementById("sendBtn");
+const startBtn           = document.getElementById("startBtn");
+const eemHintBanner      = document.getElementById("eemHintBanner");
+const typingIndicator    = document.getElementById("typingIndicator");
+const patientNameEl      = document.getElementById("patientName");
+const patientDetailEl    = document.getElementById("patientDetail");
+const micBtn             = document.getElementById("micBtn");
+const avatarContainer    = document.getElementById("avatarContainer");
+const avatarStatusEl     = document.getElementById("avatarStatus");
+const avatarErrorBanner  = document.getElementById("avatarErrorBanner");
+const avatarErrorText    = document.getElementById("avatarErrorText");
+const avatarStreamEl     = document.getElementById("avatarStream");
+
+const goSurveyBtn    = document.getElementById("goSurveyBtn");
+const goReportBtn    = document.getElementById("goReportBtn");
+const postRestartBtn = document.getElementById("postRestartBtn");
+
+const tyReportBtn    = document.getElementById("tyReportBtn");
+const tyRestartBtn   = document.getElementById("tyRestartBtn");
+
+const surveyForm        = document.getElementById("surveyForm");
+const surveyBackBtn     = document.getElementById("surveyBackBtn");
+const surveySubmitBtn   = document.getElementById("surveySubmitBtn");
+const surveyFormContent = document.getElementById("surveyFormContent");
+const surveySuccess     = document.getElementById("surveySuccess");
+const returnCountdown   = document.getElementById("returnCountdown");
+
+const downloadPdfBtn  = document.getElementById("downloadPdfBtn");
+const reportBackBtn   = document.getElementById("reportBackBtn");
+
+// ─── Screen Navigation ──────────────────────────────────────────
+let surveyDone = false;
+const allScreens = [welcomeScreen, chatScreen, eemScreen, postScreen, thankYouScreen, surveyScreen, reportScreen, adminLoginScreen, adminScreen];
+
+
+// ─── LiveAvatar Functions ────────────────────────────────────────
+
+// Connect to LiveAvatar and set up the avatar video stream
+async function connectAvatar() {
+  avatarContainer.style.display = "";
+  avatarStatusEl.innerHTML = '<span class="avatar-status-dot connecting"></span> Conectando avatar...';
+
+  try {
+    // 1. Get LiveAvatar token from our backend
+    const tokenRes = await fetch(`${API}/api/liveavatar-token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }),
+    });
+    if (!tokenRes.ok) {
+      const err = await tokenRes.json().catch(() => ({}));
+      throw new Error(err.detail || "Erro ao obter token do avatar");
+    }
+    const { session_token, session_id_la } = await tokenRes.json();
+    sessionIdLA = session_id_la;
+
+    // 2. Start LiveAvatar session
+    const startRes = await fetch(`${API}/api/liveavatar-start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_token }),
+    });
+    if (!startRes.ok) {
+      const err = await startRes.json().catch(() => ({}));
+      throw new Error(err.detail || "Erro ao iniciar sessão do avatar");
+    }
+    const liveData = await startRes.json();
+
+    // 3. Connect to LiveKit room
+    const room = new LivekitClient.Room();
+    livekitRoom = room;
+
+    // Handle remote tracks (avatar video/audio)
+    room.on(LivekitClient.RoomEvent.TrackSubscribed, (track, publication, participant) => {
+      if (track.kind === "video") {
+        track.attach(avatarStreamEl);
+      }
+      if (track.kind === "audio") {
+        const audioEl = document.createElement("audio");
+        audioEl.autoplay = true;
+        track.attach(audioEl);
+        document.body.appendChild(audioEl);
+      }
+    });
+
+    // Handle data channel events from LiveAvatar
+    room.on(LivekitClient.RoomEvent.DataReceived, (data, participant, kind, topic) => {
+      if (topic === "agent-response") {
+        try {
+          const event = JSON.parse(new TextDecoder().decode(data));
+          handleAvatarEvent(event);
+        } catch (e) {
+          console.error("Error parsing avatar event:", e);
+        }
+      }
+    });
+
+    // Handle room disconnection
+    room.on(LivekitClient.RoomEvent.Disconnected, () => {
+      console.warn("LiveKit room disconnected");
+      avatarConnected = false;
+      updateAvatarStatus("offline", "Avatar desconectado");
+      micBtn.disabled = true;
+      micBtn.classList.remove("active");
+      micEnabled = false;
+    });
+
+    await room.connect(liveData.data.livekit_url, liveData.data.livekit_client_token);
+
+    avatarConnected = true;
+    updateAvatarStatus("connected", "Avatar conectado");
+
+    // Enable microphone button
+    micBtn.disabled = false;
+
+    console.log("LiveAvatar connected successfully");
+
+  } catch (err) {
+    console.error("LiveAvatar connection error:", err);
+    avatarConnected = false;
+    avatarContainer.style.display = "none";
+    avatarErrorBanner.classList.add("active");
+    avatarErrorText.textContent = `Erro ao conectar avatar: ${err.message}. Modo texto ativado.`;
+    // Text-only fallback — chat still works
+  }
+}
+
+// Handle events from LiveAvatar via data channel
+function handleAvatarEvent(event) {
+  switch (event.event_type) {
+    case "user.transcription":
+      // Student spoke via mic — auto-send the transcription to chat
+      if (event.text && event.text.trim()) {
+        sendMessage(event.text.trim());
+      }
+      break;
+
+    case "avatar.speak_started":
+      avatarSpeaking = true;
+      updateAvatarStatus("connected", "Avatar falando...");
+      break;
+
+    case "avatar.speak_ended":
+      avatarSpeaking = false;
+      updateAvatarStatus("connected", "Avatar conectado");
+      break;
+
+    case "session.stopped":
+      console.warn("LiveAvatar session stopped");
+      avatarConnected = false;
+      updateAvatarStatus("offline", "Sessão do avatar encerrada");
+      micBtn.disabled = true;
+      micBtn.classList.remove("active");
+      micEnabled = false;
+      break;
+
+    default:
+      console.log("Avatar event:", event.event_type, event);
+  }
+}
+
+// Update avatar status indicator
+function updateAvatarStatus(state, text) {
+  avatarStatusEl.innerHTML = `<span class="avatar-status-dot ${state}"></span> ${text}`;
+}
+
+// Send text to avatar for lip-synced speech
+function sendToAvatar(text) {
+  if (!livekitRoom || !avatarConnected) return;
+  // Strip behavioral descriptions (*...*) and stage directions ([...])
+  const cleanText = text.replace(/\*[^*]+\*/g, "").replace(/\[[^\]]+\]/g, "").trim();
+  if (!cleanText) return;
+
+  try {
+    livekitRoom.localParticipant.publishData(
+      new TextEncoder().encode(JSON.stringify({
+        event_type: "avatar.speak_text",
+        session_id: sessionIdLA,
+        text: cleanText,
+      })),
+      { topic: "agent-control" }
+    );
+  } catch (err) {
+    console.error("Error sending to avatar:", err);
+  }
+}
+
+// Disconnect LiveAvatar cleanly
+function disconnectAvatar() {
+  if (livekitRoom) {
+    try { livekitRoom.disconnect(); } catch (e) { /* ignore */ }
+    livekitRoom = null;
+  }
+  avatarConnected = false;
+  sessionIdLA = null;
+  micEnabled = false;
+  avatarSpeaking = false;
+  micBtn.disabled = true;
+  micBtn.classList.remove("active");
+}
+
+// Mic toggle handler
+micBtn.addEventListener("click", async () => {
+  if (!livekitRoom || !avatarConnected) return;
+
+  micEnabled = !micEnabled;
+  try {
+    await livekitRoom.localParticipant.setMicrophoneEnabled(micEnabled);
+    micBtn.classList.toggle("active", micEnabled);
+  } catch (err) {
+    console.error("Mic toggle error:", err);
+    micEnabled = false;
+    micBtn.classList.remove("active");
+  }
+});
+
+function showScreen(screen) {
+  allScreens.forEach(s => s.classList.remove("active"));
+  screen.classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+// ─── Start Session ──────────────────────────────────────────────
+const videoIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0 1 21 8.618v6.764a1 1 0 0 1-1.447.894L15 14M5 18h8a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z"/></svg>`;
+
+startBtn.addEventListener("click", async () => {
+  startBtn.disabled = true;
+  startBtn.innerHTML = `${videoIconSvg} Conectando...`;
+
+  try {
+    // Start session with Helena specifically
+    const res = await fetch(`${API}/api/start?patient=Helena`, { method: "POST" });
+    const data = await res.json();
+    sessionId = data.session_id;
+    lastReportData = null;
+    surveyDone = false;
+
+    patientNameEl.textContent = data.patient_name;
+    patientDetailEl.textContent = `${data.patient_age} anos • ${data.patient_gender}`;
+
+    // Clear previous messages
+    messagesContainer.querySelectorAll(".message, .message-wrapper").forEach(el => el.remove());
+
+    // Disconnect previous avatar if any
+    disconnectAvatar();
+
+    // Reset chat state
+    messageInput.disabled = false;
+    messageInput.placeholder = "Inicie o atendimento com o(a) paciente...";
+    sendBtn.disabled = false;
+    eemHintBanner.style.display = "";
+    eemCompleted = false;
+    document.getElementById("phaseLabel").textContent = "Simulação em andamento";
+
+    // Reset avatar UI
+    avatarContainer.style.display = "none";
+    avatarErrorBanner.classList.remove("active");
+
+    // Go to chat screen
+    showScreen(chatScreen);
+    messageInput.focus();
+
+    // Connect LiveAvatar in background (non-blocking)
+    connectAvatar();
+
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao iniciar a sessão. Tente novamente.");
+  } finally {
+    startBtn.disabled = false;
+    startBtn.innerHTML = `${videoIconSvg} Consultar Helena (Avatar)`;
+  }
+});
+
+// ─── Send Message ───────────────────────────────────────────────
+async function sendMessage(text) {
+  if (!text.trim() || !sessionId || sending) return;
+
+  // Detect "EEM" command — EEM is mandatory before finishing
+  if (text.trim().toUpperCase() === "EEM") {
+    if (eemCompleted) {
+      addMessage("system", "Você já realizou o EEM nesta simulação.");
+      messageInput.value = "";
+      autoResize(messageInput);
+      return;
+    }
+    messageInput.value = "";
+    autoResize(messageInput);
+    openEEMScreen();
+    return;
+  }
+
+  // ENCERRAR is no longer accepted in chat — must use EEM screen
+  if (text.trim().toUpperCase() === "ENCERRAR") {
+    messageInput.value = "";
+    autoResize(messageInput);
+    addMessage("system", "Para encerrar a simulação, primeiro realize o Exame do Estado Mental. Digite EEM.");
+    return;
+  }
+
+  sending = true;
+  sendBtn.disabled = true;
+
+  addMessage("student", text);
+  messageInput.value = "";
+  autoResize(messageInput);
+  showTyping(true);
+
+  try {
+    const res = await fetch(`${API}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, message: text }),
+    });
+    const data = await res.json();
+
+    showTyping(false);
+    addMessage("patient", data.patient_response);
+
+    // Send clean dialogue text to avatar for lip-synced speech
+    sendToAvatar(data.patient_response);
+
+  } catch (err) {
+    showTyping(false);
+    addMessage("system", "Erro na comunicação. Tente enviar novamente.");
+    console.error(err);
+  } finally {
+    sending = false;
+    sendBtn.disabled = false;
+    messageInput.focus();
+  }
+}
+
+// Send button click
+sendBtn.addEventListener("click", () => sendMessage(messageInput.value));
+
+// Enter to send (Shift+Enter for new line)
+messageInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage(messageInput.value);
+  }
+});
+
+// Auto-resize textarea
+function autoResize(el) {
+  el.style.height = "auto";
+  el.style.height = Math.min(el.scrollHeight, 120) + "px";
+}
+messageInput.addEventListener("input", () => autoResize(messageInput));
+
+// ─── Add Message to Chat ────────────────────────────────────────
+function addMessage(type, text) {
+  const div = document.createElement("div");
+  div.classList.add("message", type);
+  if (type === "patient") {
+    div.innerHTML = text.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/\*([^*]+)\*/g, '<span class="behavior">$1</span>');
+  } else {
+    div.textContent = text;
+  }
+  messagesContainer.insertBefore(div, typingIndicator);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// ─── Typing Indicator ───────────────────────────────────────────
+function showTyping(show) {
+  typingIndicator.style.display = show ? "block" : "none";
+  if (show) messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// ─── EEM Screen Logic ───────────────────────────────────────────
+async function openEEMScreen() {
+  // Reset EEM form
+  document.getElementById("eemForm").reset();
+
+  // Reset submit button
+  const submitBtn = document.getElementById("eemSubmitBtn");
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Encerrar Simulação`;
+
+  // Show loading in summary panel
+  document.getElementById("eemSummaryContent").innerHTML = `
+    <div class="eem-summary-loading">
+      <div class="spinner"></div>
+      <p>Analisando a conversa...</p>
+    </div>
+  `;
+
+  showScreen(eemScreen);
+
+  // Fetch AI-generated observational summary
+  try {
+    const res = await fetch(`${API}/api/eem-summary`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }),
+    });
+    const data = await res.json();
+
+    // Format the summary: convert markdown bold to HTML
+    let html = data.eem_summary
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\n/g, "<br>");
+    document.getElementById("eemSummaryContent").innerHTML = html;
+  } catch (err) {
+    console.error("Erro ao carregar resumo do EEM:", err);
+    document.getElementById("eemSummaryContent").innerHTML =
+      '<p style="color:var(--danger);">Erro ao carregar dados observacionais. Preencha o formulário com base nas suas próprias observações.</p>';
+  }
+}
+
+// EEM form submission: submit EEM + end session in one action
+document.getElementById("eemForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const eemData = {
+    aparencia_geral: document.getElementById("eem-aparencia").value.trim(),
+    comportamento_psicomotor: document.getElementById("eem-psicomotor").value.trim(),
+    humor: document.getElementById("eem-humor").value.trim(),
+    afeto: document.getElementById("eem-afeto").value.trim(),
+    pensamento_forma: document.getElementById("eem-pensamento-forma").value.trim(),
+    pensamento_conteudo: document.getElementById("eem-pensamento-conteudo").value.trim(),
+    sensopercepcao: document.getElementById("eem-sensopercepcao").value.trim(),
+    cognicao: document.getElementById("eem-cognicao").value.trim(),
+    juizo_critico: document.getElementById("eem-juizo").value.trim(),
+  };
+
+  // Check if at least one field was filled
+  const filled = Object.values(eemData).some(v => v.length > 0);
+  if (!filled) {
+    alert("Preencha ao menos um campo do EEM.");
+    return;
+  }
+
+  const btn = document.getElementById("eemSubmitBtn");
+  btn.disabled = true;
+  btn.innerHTML = "Encerrando...";
+
+  // Submit EEM data
+  try {
+    await fetch(`${API}/api/eem-submit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, eem_data: eemData }),
+    });
+  } catch (err) {
+    console.error("Erro ao salvar EEM:", err);
+  }
+
+  eemCompleted = true;
+
+  // End session directly
+  endSession();
+});
+
+// ─── End Session ────────────────────────────────────────────────
+async function endSession() {
+  messageInput.value = "";
+  autoResize(messageInput);
+
+  // Disable chat input
+  messageInput.disabled = true;
+  messageInput.placeholder = "Simulação encerrada";
+  sendBtn.disabled = true;
+
+  // Disconnect LiveAvatar
+  disconnectAvatar();
+  avatarContainer.style.display = "none";
+
+  // Update UI
+  eemHintBanner.style.display = "none";
+  document.getElementById("phaseLabel").textContent = "Simulação encerrada";
+
+  // Show brief system message
+  addMessage("system", "Simulação encerrada.");
+
+  // Call /api/finish in background, then show post-screen immediately
+  showScreen(postScreen);
+
+  try {
+    const res = await fetch(`${API}/api/finish`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }),
+    });
+    const data = await res.json();
+    lastReportData = data;
+  } catch (err) {
+    console.error("Erro ao finalizar sessão:", err);
+  }
+}
+
+// ─── Post-Screen Navigation ─────────────────────────────────────
+goSurveyBtn.addEventListener("click", () => {
+  // Reset survey form state
+  surveyForm.reset();
+  surveyFormContent.style.display = "";
+  surveySuccess.classList.remove("active");
+  document.querySelectorAll(".likert-question.error").forEach(el => el.classList.remove("error"));
+  showScreen(surveyScreen);
+});
+
+goReportBtn.addEventListener("click", () => {
+  if (lastReportData) {
+    showReport(lastReportData);
+    showScreen(reportScreen);
+  } else {
+    // Still loading — show screen with loading message
+    document.getElementById("reportContent").innerHTML = `
+      <h2>Relatório Formativo</h2>
+      <p style="color:var(--text-secondary);margin-top:16px;">Aguardando dados do servidor...</p>
+    `;
+    showScreen(reportScreen);
+    // Poll for data
+    const poll = setInterval(() => {
+      if (lastReportData) {
+        clearInterval(poll);
+        showReport(lastReportData);
+      }
+    }, 500);
+  }
+});
+
+postRestartBtn.addEventListener("click", () => {
+  sessionId = null;
+  lastReportData = null;
+  surveyDone = false;
+  disconnectAvatar();
+  showScreen(welcomeScreen);
+});
+
+// ─── Thank You Screen Navigation ────────────────────────────────────
+tyReportBtn.addEventListener("click", () => {
+  if (lastReportData) {
+    showReport(lastReportData);
+    showScreen(reportScreen);
+  } else {
+    document.getElementById("reportContent").innerHTML = `
+      <h2>Relat\u00f3rio Formativo</h2>
+      <p style="color:var(--text-secondary);margin-top:16px;">Aguardando dados do servidor...</p>
+    `;
+    showScreen(reportScreen);
+    const poll = setInterval(() => {
+      if (lastReportData) {
+        clearInterval(poll);
+        showReport(lastReportData);
+      }
+    }, 500);
+  }
+});
+
+tyRestartBtn.addEventListener("click", () => {
+  sessionId = null;
+  lastReportData = null;
+  surveyDone = false;
+  disconnectAvatar();
+  showScreen(welcomeScreen);
+});
+
+// ─── Survey Logic ────────────────────────────────────────────────
+surveyBackBtn.addEventListener("click", () => {
+  showScreen(postScreen);
+});
+
+surveyForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Validate: all 10 Likert questions required
+  const requiredQs = ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10"];
+  let valid = true;
+
+  requiredQs.forEach(q => {
+    const block = document.getElementById(q.toLowerCase() + "-block");
+    const checked = surveyForm.querySelector(`input[name="${q}"]:checked`);
+    if (!checked) {
+      valid = false;
+      if (block) block.classList.add("error");
+    } else {
+      if (block) block.classList.remove("error");
+    }
+  });
+
+  if (!valid) {
+    // Scroll to first error
+    const firstError = document.querySelector(".likert-question.error");
+    if (firstError) firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  // Build responses object
+  const responses = {};
+  requiredQs.forEach(q => {
+    const checked = surveyForm.querySelector(`input[name="${q}"]:checked`);
+    responses[q] = parseInt(checked.value, 10);
+  });
+  const q11 = document.getElementById("surveyQ11").value.trim();
+  const q12 = document.getElementById("surveyQ12").value.trim();
+  if (q11) responses["Q11"] = q11;
+  if (q12) responses["Q12"] = q12;
+
+  // Disable submit button while sending
+  surveySubmitBtn.disabled = true;
+  surveySubmitBtn.textContent = "Enviando...";
+
+  try {
+    await fetch(`${API}/api/survey`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: sessionId || "unknown",
+        responses: responses,
+      }),
+    });
+  } catch (err) {
+    console.error("Erro ao enviar pesquisa:", err);
+    // Show success anyway — don't block UX on network issues
+  } finally {
+    surveySubmitBtn.disabled = false;
+    surveySubmitBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Enviar Pesquisa`;
+  }
+
+  // Mark survey as completed
+  surveyDone = true;
+
+  // Show success message
+  surveyFormContent.style.display = "none";
+  surveySuccess.classList.add("active");
+
+  // Auto-return to thank-you screen after 3 seconds
+  let count = 3;
+  returnCountdown.textContent = count;
+  const timer = setInterval(() => {
+    count--;
+    returnCountdown.textContent = count;
+    if (count <= 0) {
+      clearInterval(timer);
+      showScreen(thankYouScreen);
+    }
+  }, 1000);
+});
+
+// ─── Report Back Button ──────────────────────────────────────────
+reportBackBtn.addEventListener("click", () => {
+  showScreen(surveyDone ? thankYouScreen : postScreen);
+});
+
+// ─── EEM Report Section Builder ──────────────────────────────────
+function buildEEMReportSection(data) {
+  if (!data.eem_student && !data.eem_evaluation) {
+    return `<div class="report-section">
+      <h3>Exame do Estado Mental (EEM)</h3>
+      <p style="color:var(--text-muted); font-style:italic;">Não realizado nesta simulação.</p>
+    </div>`;
+  }
+
+  const eemFields = {
+    aparencia_geral: "Aparência Geral",
+    comportamento_psicomotor: "Comportamento Psicomotor",
+    humor: "Humor",
+    afeto: "Afeto",
+    pensamento_forma: "Pensamento — Forma",
+    pensamento_conteudo: "Pensamento — Conteúdo",
+    sensopercepcao: "Sensopercepção",
+    cognicao: "Cognição",
+    juizo_critico: "Juízo Crítico e Insight",
+  };
+
+  let studentRows = "";
+  if (data.eem_student) {
+    for (const [key, label] of Object.entries(eemFields)) {
+      const val = data.eem_student[key] || "—";
+      studentRows += `<tr><td style="font-weight:600; white-space:nowrap;">${label}</td><td>${val}</td></tr>`;
+    }
+  }
+
+  const evalHtml = data.eem_evaluation ? `
+    <div style="margin-top:20px;">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:8px;">Avaliação do EEM</h4>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">${data.eem_evaluation.comentario || ""}</p>
+      ${data.eem_evaluation.pontos_fortes ? `<p style="margin-top:8px; font-size:14px;"><strong style="color:var(--success);">Pontos fortes:</strong> ${data.eem_evaluation.pontos_fortes}</p>` : ""}
+      ${data.eem_evaluation.pontos_melhoria ? `<p style="margin-top:4px; font-size:14px;"><strong style="color:var(--warning);">Pontos a melhorar:</strong> ${data.eem_evaluation.pontos_melhoria}</p>` : ""}
+    </div>
+  ` : "";
+
+  return `<div class="report-section">
+    <h3>Exame do Estado Mental (EEM)</h3>
+    ${data.eem_student ? `
+      <table class="report-table">
+        <thead><tr><th>Campo</th><th>Observação do Estudante</th></tr></thead>
+        <tbody>${studentRows}</tbody>
+      </table>
+    ` : ""}
+    ${evalHtml}
+  </div>`;
+}
+
+// ─── Show Report ────────────────────────────────────────────────
+function showReport(data) {
+  const scoreClass = data.score_pct >= 70 ? "high" : data.score_pct >= 40 ? "medium" : "low";
+  const qa = data.quality_assessment;
+  const descriptions = data.criteria_descriptions || {};
+
+  // Build criteria table
+  const criteriaOrder = [
+    "A","A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13",
+    "B","B1","B2","C","C1","C2","C3","C4","C5","C6",
+    "D","E","F","G","H","I","J","EXAMES","RISCO","EEM"
+  ];
+
+  const allCriteriaKeys = [...new Set([
+    ...data.criteria_investigated,
+    ...data.criteria_missing
+  ])].sort((a, b) => {
+    const ia = criteriaOrder.indexOf(a);
+    const ib = criteriaOrder.indexOf(b);
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+
+  let tableRows = allCriteriaKeys.map(code => {
+    const inv = data.criteria_investigated.includes(code);
+    const label = descriptions[code] || code;
+    const statusHtml = inv
+      ? `<span class="status-pill investigated">&#10003; Investigado</span>`
+      : `<span class="status-pill missing">&#8212; Não investigado</span>`;
+    return `<tr>
+      <td style="font-weight:600; white-space:nowrap;">${code}</td>
+      <td>${label}</td>
+      <td>${statusHtml}</td>
+    </tr>`;
+  }).join("");
+
+  // Build quality assessment dimension cards
+  const dimensionNames = {
+    acolhimento_rapport: "Acolhimento e Rapport",
+    progressao_logica: "Progressão Lógica",
+    exploracao_temporal: "Exploração Temporal",
+    aprofundamento_fenomenologico: "Aprofundamento Fenomenológico",
+    linguagem_comunicacao: "Linguagem e Comunicação",
+    construcao_vinculo: "Construção de Vínculo",
+  };
+
+  const classLabels = {
+    "adequado": "Adequado",
+    "parcial": "Parcial",
+    "insuficiente": "Insuficiente",
+    "não_aplicável": "N/A",
+  };
+
+  let dimCardsHtml = "";
+  for (const [key, displayName] of Object.entries(dimensionNames)) {
+    const dim = qa[key] || { classificacao: "não_aplicável", observacao: "Não disponível" };
+    const cssClass = dim.classificacao === "não_aplicável" ? "nao-aplicavel" : dim.classificacao;
+    dimCardsHtml += `
+      <div class="quality-dim-card">
+        <div class="dim-name">${displayName}</div>
+        <div class="dim-classification ${cssClass}">${classLabels[dim.classificacao] || dim.classificacao}</div>
+        <div class="dim-obs">${dim.observacao}</div>
+      </div>
+    `;
+  }
+
+  // Build formative tips
+  const tips = data.formative_tips || [];
+  const sugFormativas = qa.sugestoes_formativas || [];
+  const allTips = [...new Set([...sugFormativas, ...tips])];
+
+  let tipsHtml = allTips.map(t => `<div class="tip-item">
+    <span class="tip-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+    <div>${t}</div>
+  </div>`).join("");
+
+  const total = data.criteria_investigated.length + data.criteria_missing.length;
+
+  document.getElementById("reportContent").innerHTML = `
+    <h2>Relatório Formativo</h2>
+    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 4px;">Diagnóstico do caso: <strong>${data.diagnostico_correto}</strong></p>
+
+    <div class="report-score-row">
+      <div class="report-big-score ${scoreClass}">${data.score_pct}%</div>
+      <div class="report-score-detail">
+        <strong>Cobertura de Critérios DSM-5-TR</strong><br>
+        ${data.criteria_investigated.length} de ${total} critérios investigados em ${data.total_turns} turnos
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3>Critérios DSM-5-TR</h3>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Critério</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-section">
+      <h3>Avaliação da Qualidade da Entrevista</h3>
+      <div class="quality-dim-grid">
+        ${dimCardsHtml}
+      </div>
+      ${qa.avaliacao_global ? `
+        <div class="global-assessment">
+          <p><strong>Avaliação Global:</strong> ${qa.avaliacao_global}</p>
+        </div>
+      ` : ""}
+    </div>
+
+    ${allTips.length > 0 ? `<div class="report-section"><h3>Orientações Formativas</h3>${tipsHtml}</div>` : ""}
+
+    ${buildEEMReportSection(data)}
+
+    <div class="disclaimer">
+      <strong>Aviso:</strong> Este simulador é uma ferramenta de treinamento acadêmico.
+      Não substitui a prática clínica supervisionada. Os casos são fictícios e baseados nos critérios do DSM-5-TR.
+    </div>
+  `;
+}
+
+// ─── PDF Download ────────────────────────────────────────────────
+downloadPdfBtn.addEventListener("click", () => {
+  if (!lastReportData) {
+    alert("Nenhum relatório disponível.");
+    return;
+  }
+  generatePDF(lastReportData);
+});
+
+function generatePDF(data) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 20;
+  const contentW = pageW - margin * 2;
+  let y = margin;
+
+  // Colors
+  const blue      = [37, 99, 235];
+  const darkText  = [26, 26, 26];
+  const grayText  = [90, 90, 90];
+  const green     = [22, 163, 74];
+  const orange    = [217, 119, 6];
+  const red       = [220, 38, 38];
+
+  function checkPage(needed) {
+    if (y + needed > pageH - 20) {
+      doc.addPage();
+      y = margin;
+    }
+  }
+
+  // ── Header ──
+  doc.setFillColor(...blue);
+  doc.rect(0, 0, pageW, 40, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(22);
+  doc.setFont("helvetica", "bold");
+  doc.text("PsiqMentor v5.5", margin, 18);
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  doc.text("Relatório Formativo — Simulação com Avatar Interativo", margin, 28);
+  doc.setFontSize(9);
+  doc.text("CESUPA • Mestrado em Ensino em Saúde • " + new Date().toLocaleDateString("pt-BR"), margin, 35);
+
+  y = 48;
+
+  // ── Score Box ──
+  doc.setFillColor(240, 239, 235);
+  doc.roundedRect(margin, y, contentW, 28, 3, 3, "F");
+
+  const scoreColor = data.score_pct >= 70 ? green : data.score_pct >= 40 ? orange : red;
+  doc.setTextColor(...scoreColor);
+  doc.setFontSize(32);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.score_pct + "%", margin + 10, y + 19);
+
+  const total = data.criteria_investigated.length + data.criteria_missing.length;
+  doc.setTextColor(...darkText);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text("Cobertura de Critérios DSM-5-TR", margin + 45, y + 12);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...grayText);
+  doc.text(`${data.criteria_investigated.length} de ${total} critérios investigados em ${data.total_turns} turnos`, margin + 45, y + 20);
+  doc.setTextColor(...darkText);
+  doc.setFontSize(10);
+  doc.text(`Diagnóstico do caso: ${data.diagnostico_correto}`, margin + 45, y + 26);
+
+  y += 36;
+
+  // ── Criteria Section ──
+  doc.setTextColor(...blue);
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.text("Critérios Investigados", margin, y);
+  y += 2;
+  doc.setDrawColor(...blue);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y, margin + contentW, y);
+  y += 6;
+
+  const descriptions = data.criteria_descriptions || {};
+  const criteriaOrder = [
+    "A","A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13",
+    "B","B1","B2","C","C1","C2","C3","C4","C5","C6",
+    "D","E","F","G","H","I","J","EXAMES","RISCO","EEM"
+  ];
+
+  // Build sorted list of keys present in descriptions
+  const allKeys = Object.keys(descriptions).sort((a, b) => {
+    const ia = criteriaOrder.indexOf(a);
+    const ib = criteriaOrder.indexOf(b);
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+
+  doc.setFontSize(10);
+  allKeys.forEach(code => {
+    checkPage(7);
+    const inv = data.criteria_investigated.includes(code);
+    if (inv) {
+      doc.setFillColor(...green);
+    } else {
+      doc.setFillColor(200, 200, 200);
+    }
+    doc.circle(margin + 3, y - 1.2, 2, "F");
+    doc.setTextColor(...(inv ? darkText : grayText));
+    doc.setFont("helvetica", inv ? "bold" : "normal");
+    const label = descriptions[code] || code;
+    const shortLabel = label.length > 70 ? label.substring(0, 67) + "..." : label;
+    doc.text(`${code} — ${shortLabel}`, margin + 9, y);
+    y += 6;
+  });
+
+  y += 6;
+
+  // ── Quality Assessment ──
+  checkPage(50);
+  doc.setTextColor(...blue);
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.text("Avaliação da Qualidade da Entrevista", margin, y);
+  y += 2;
+  doc.line(margin, y, margin + contentW, y);
+  y += 8;
+
+  const qa = data.quality_assessment;
+  const dimensionNames = {
+    acolhimento_rapport: "Acolhimento e Rapport",
+    progressao_logica: "Progressão Lógica",
+    exploracao_temporal: "Exploração Temporal",
+    aprofundamento_fenomenologico: "Aprofundamento Fenomenológico",
+    linguagem_comunicacao: "Linguagem e Comunicação",
+    construcao_vinculo: "Construção de Vínculo",
+  };
+  const classColors = {
+    "adequado": green,
+    "parcial": orange,
+    "insuficiente": red,
+    "não_aplicável": [138, 138, 138],
+  };
+
+  for (const [key, displayName] of Object.entries(dimensionNames)) {
+    checkPage(14);
+    const dim = qa[key] || { classificacao: "não_aplicável", observacao: "" };
+    const color = classColors[dim.classificacao] || grayText;
+
+    doc.setFillColor(...color);
+    doc.circle(margin + 3, y - 1.2, 2, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...darkText);
+    doc.setFontSize(10);
+    doc.text(`${displayName}: `, margin + 9, y);
+
+    const nameWidth = doc.getTextWidth(`${displayName}: `);
+    doc.setTextColor(...color);
+    doc.setFont("helvetica", "bold");
+    doc.text(dim.classificacao.toUpperCase(), margin + 9 + nameWidth, y);
+    y += 5;
+
+    if (dim.observacao) {
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(...grayText);
+      doc.setFontSize(9);
+      const obsLines = doc.splitTextToSize(dim.observacao, contentW - 12);
+      doc.text(obsLines, margin + 9, y);
+      y += obsLines.length * 4 + 3;
+    } else {
+      y += 3;
+    }
+  }
+
+  // Global assessment
+  if (qa.avaliacao_global) {
+    y += 4;
+    checkPage(20);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...darkText);
+    doc.setFontSize(10);
+    doc.text("Avaliação Global:", margin, y);
+    y += 5;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...grayText);
+    doc.setFontSize(9);
+    const globalLines = doc.splitTextToSize(qa.avaliacao_global, contentW - 4);
+    globalLines.forEach(line => {
+      checkPage(5);
+      doc.text(line, margin + 2, y);
+      y += 4;
+    });
+  }
+
+  y += 6;
+
+  // ── Formative Tips ──
+  const tips = data.formative_tips || [];
+  const sugFormativas = qa.sugestoes_formativas || [];
+  const allTips = [...new Set([...sugFormativas, ...tips])];
+
+  if (allTips.length > 0) {
+    checkPage(20);
+    doc.setTextColor(...blue);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text("Orientações Formativas", margin, y);
+    y += 2;
+    doc.line(margin, y, margin + contentW, y);
+    y += 8;
+
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...darkText);
+    allTips.forEach(tip => {
+      checkPage(14);
+      const lines = doc.splitTextToSize("• " + tip, contentW - 4);
+      doc.text(lines, margin + 2, y);
+      y += lines.length * 4 + 4;
+    });
+  }
+
+  // ── EEM Section ──
+  if (data.eem_student) {
+    y += 6;
+    checkPage(30);
+    doc.setTextColor(...blue);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text("Exame do Estado Mental (EEM)", margin, y);
+    y += 2;
+    doc.line(margin, y, margin + contentW, y);
+    y += 8;
+
+    const eemFieldNames = {
+      aparencia_geral: "Apar\u00eancia Geral",
+      comportamento_psicomotor: "Comp. Psicomotor",
+      humor: "Humor",
+      afeto: "Afeto",
+      pensamento_forma: "Pensamento (Forma)",
+      pensamento_conteudo: "Pensamento (Conte\u00fado)",
+      sensopercepcao: "Sensopercep\u00e7\u00e3o",
+      cognicao: "Cogni\u00e7\u00e3o",
+      juizo_critico: "Ju\u00edzo Cr\u00edtico",
+    };
+
+    for (const [key, label] of Object.entries(eemFieldNames)) {
+      const val = data.eem_student[key] || "\u2014";
+      if (val === "\u2014") continue;
+      checkPage(12);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(...darkText);
+      doc.setFontSize(9);
+      doc.text(`${label}:`, margin + 2, y);
+      y += 4;
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(...grayText);
+      const valLines = doc.splitTextToSize(val, contentW - 6);
+      doc.text(valLines, margin + 4, y);
+      y += valLines.length * 4 + 3;
+    }
+
+    if (data.eem_evaluation && data.eem_evaluation.comentario) {
+      y += 4;
+      checkPage(20);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(...darkText);
+      doc.setFontSize(10);
+      doc.text("Avalia\u00e7\u00e3o do EEM:", margin, y);
+      y += 5;
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(...grayText);
+      doc.setFontSize(9);
+      const evalLines = doc.splitTextToSize(data.eem_evaluation.comentario, contentW - 4);
+      evalLines.forEach(line => {
+        checkPage(5);
+        doc.text(line, margin + 2, y);
+        y += 4;
+      });
+    }
+  } else {
+    y += 6;
+    checkPage(20);
+    doc.setTextColor(...blue);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text("Exame do Estado Mental (EEM)", margin, y);
+    y += 2;
+    doc.line(margin, y, margin + contentW, y);
+    y += 8;
+    doc.setFont("helvetica", "italic");
+    doc.setTextColor(...grayText);
+    doc.setFontSize(10);
+    doc.text("N\u00e3o realizado nesta simula\u00e7\u00e3o.", margin + 2, y);
+    y += 6;
+  }
+
+  // ── Footer ──
+  const footerY = pageH - 12;
+  doc.setFontSize(8);
+  doc.setTextColor(...grayText);
+  doc.setFont("helvetica", "italic");
+  doc.text("PsiqMentor • Produto Educacional • Mestrado em Ensino em Saúde • CESUPA", pageW / 2, footerY, { align: "center" });
+  doc.text("Este simulador é uma ferramenta de treinamento acadêmico. Não substitui a prática clínica supervisionada.", pageW / 2, footerY + 4, { align: "center" });
+
+  // Save
+  const dateStr = new Date().toISOString().slice(0, 10);
+  doc.save(`PsiqMentor_Relatorio_${dateStr}.pdf`);
+}
+
+// ─── Admin Panel ────────────────────────────────────────────────
+const adminLink       = document.getElementById("adminLink");
+const adminLoginBtn   = document.getElementById("adminLoginBtn");
+const adminLoginBack  = document.getElementById("adminLoginBack");
+const adminUserInput  = document.getElementById("adminUser");
+const adminPassInput  = document.getElementById("adminPass");
+const adminLoginError = document.getElementById("adminLoginError");
+const adminLogoutBtn  = document.getElementById("adminLogoutBtn");
+const adminTestApiBtn = document.getElementById("adminTestApiBtn");
+const adminExportBtn  = document.getElementById("adminExportBtn");
+const adminClearBtn   = document.getElementById("adminClearBtn");
+const adminBackToApp  = document.getElementById("adminBackToApp");
+
+// Go to admin login
+adminLink.addEventListener("click", () => {
+  adminLoginError.classList.remove("active");
+  adminUserInput.value = "";
+  adminPassInput.value = "";
+  showScreen(adminLoginScreen);
+});
+
+// Back from login
+adminLoginBack.addEventListener("click", () => showScreen(welcomeScreen));
+
+// Login
+adminLoginBtn.addEventListener("click", async () => {
+  adminLoginBtn.disabled = true;
+  adminLoginBtn.textContent = "Entrando...";
+  adminLoginError.classList.remove("active");
+
+  try {
+    const res = await fetch(`${API}/api/admin/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: adminUserInput.value.trim(),
+        password: adminPassInput.value,
+      }),
+    });
+    if (!res.ok) {
+      adminLoginError.textContent = "Credenciais inv\u00e1lidas";
+      adminLoginError.classList.add("active");
+      return;
+    }
+    const data = await res.json();
+    adminToken = data.token;
+    showScreen(adminScreen);
+    loadAdminDashboard();
+  } catch (err) {
+    adminLoginError.textContent = "Erro de conex\u00e3o";
+    adminLoginError.classList.add("active");
+  } finally {
+    adminLoginBtn.disabled = false;
+    adminLoginBtn.textContent = "Entrar";
+  }
+});
+
+// Enter key on password field
+adminPassInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") adminLoginBtn.click();
+});
+
+// Logout
+adminLogoutBtn.addEventListener("click", () => {
+  adminToken = null;
+  showScreen(welcomeScreen);
+});
+adminBackToApp.addEventListener("click", () => {
+  adminToken = null;
+  showScreen(welcomeScreen);
+});
+
+// Load dashboard data
+async function loadAdminDashboard() {
+  if (!adminToken) return;
+
+  try {
+    const [dashRes, dataRes] = await Promise.all([
+      fetch(`${API}/api/admin/dashboard?token=${adminToken}`),
+      fetch(`${API}/api/admin/survey/data?token=${adminToken}`),
+    ]);
+
+    if (!dashRes.ok || !dataRes.ok) {
+      if (dashRes.status === 401 || dataRes.status === 401) {
+        alert("Sess\u00e3o expirada. Fa\u00e7a login novamente.");
+        adminToken = null;
+        showScreen(adminLoginScreen);
+        return;
+      }
+    }
+
+    const dash = await dashRes.json();
+    const surveyData = await dataRes.json();
+
+    // Health
+    document.getElementById("adminVersion").textContent = dash.health.version;
+    const keyEl = document.getElementById("adminApiKey");
+    if (dash.health.anthropic_key_set) {
+      keyEl.innerHTML = '<span class="status-ok">Configurada</span>';
+    } else {
+      keyEl.innerHTML = '<span class="status-error">N\u00e3o configurada</span>';
+    }
+    document.getElementById("adminActiveSessions").textContent = dash.health.active_sessions;
+    document.getElementById("adminTotalSessions").textContent = dash.health.total_sessions;
+
+    // Surveys summary
+    document.getElementById("adminSurveyTotal").textContent = dash.surveys.total;
+
+    // Transtorno breakdown
+    const breakdownEl = document.getElementById("adminTranstornoBreakdown");
+    const counts = dash.surveys.by_transtorno;
+    if (Object.keys(counts).length > 0) {
+      breakdownEl.innerHTML = '<div class="admin-transtorno-grid">' +
+        Object.entries(counts).map(([name, count]) =>
+          `<div class="admin-transtorno-item"><span class="name">${name}</span><span class="count">${count}</span></div>`
+        ).join("") + '</div>';
+    } else {
+      breakdownEl.innerHTML = '';
+    }
+
+    // Survey data table
+    const tableEl = document.getElementById("adminSurveyTable");
+    const surveys = surveyData.surveys || [];
+    if (surveys.length === 0) {
+      tableEl.innerHTML = '<div class="admin-empty">Nenhuma resposta registrada</div>';
+    } else {
+      let html = '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
+      html += '<th>Data</th><th>Transtorno</th>';
+      for (let i = 1; i <= 10; i++) html += `<th>Q${i}</th>`;
+      html += '<th>Q11</th><th>Q12</th></tr></thead><tbody>';
+
+      surveys.forEach(s => {
+        const ts = s.timestamp ? new Date(s.timestamp).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" }) : "--";
+        const resp = s.responses || {};
+        html += `<tr><td>${ts}</td><td>${s.transtorno || "--"}</td>`;
+        for (let i = 1; i <= 10; i++) html += `<td>${resp["Q" + i] ?? "--"}</td>`;
+        html += `<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis">${resp.Q11 || "--"}</td>`;
+        html += `<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis">${resp.Q12 || "--"}</td>`;
+        html += '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+      tableEl.innerHTML = html;
+    }
+
+  } catch (err) {
+    console.error("Erro ao carregar dashboard:", err);
+  }
+}
+
+// Test Anthropic API
+adminTestApiBtn.addEventListener("click", async () => {
+  const resultEl = document.getElementById("adminApiResult");
+  adminTestApiBtn.disabled = true;
+  adminTestApiBtn.innerHTML = '\u23F3 Testando...';
+  resultEl.className = "admin-api-result";
+  resultEl.classList.remove("active");
+
+  try {
+    const res = await fetch(`${API}/api/admin/test-anthropic?token=${adminToken}`, { method: "POST" });
+    const data = await res.json();
+
+    if (data.status === "ok") {
+      resultEl.className = "admin-api-result active ok";
+      resultEl.innerHTML = `\u2705 API OK &mdash; Modelo: ${data.model} &mdash; Tempo: ${data.response_time_ms}ms<br><small>Resposta: \"${data.message}\"</small>`;
+    } else {
+      resultEl.className = "admin-api-result active error";
+      resultEl.innerHTML = `\u274C Erro &mdash; ${data.error}<br><small>Tempo: ${data.response_time_ms}ms</small>`;
+    }
+  } catch (err) {
+    resultEl.className = "admin-api-result active error";
+    resultEl.textContent = `Erro de conex\u00e3o: ${err.message}`;
+  } finally {
+    adminTestApiBtn.disabled = false;
+    adminTestApiBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Testar API Anthropic';
+  }
+});
+
+// Export CSV
+adminExportBtn.addEventListener("click", () => {
+  window.open(`${API}/api/survey/export`, "_blank");
+});
+
+// Clear survey data
+adminClearBtn.addEventListener("click", async () => {
+  if (!confirm("Tem certeza que deseja apagar TODOS os dados de pesquisa?\n\nEsta a\u00e7\u00e3o n\u00e3o pode ser desfeita.")) return;
+  if (!confirm("Confirma\u00e7\u00e3o final: apagar todos os dados de pesquisa de satisfa\u00e7\u00e3o?")) return;
+
+  try {
+    const res = await fetch(`${API}/api/admin/survey/clear?token=${adminToken}`, { method: "POST" });
+    if (res.ok) {
+      alert("Dados removidos com sucesso.");
+      loadAdminDashboard();
+    } else {
+      alert("Erro ao limpar dados.");
+    }
+  } catch (err) {
+    alert("Erro de conex\u00e3o.");
+  }
+});
+</script>
+
+</body>
+</html>

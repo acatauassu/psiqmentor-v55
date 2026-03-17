@@ -1,0 +1,196 @@
+{
+  "transtornos_de_ansiedade": {
+    "descricao_geral": "Os transtornos de ansiedade incluem transtornos que compartilham características de medo e ansiedade excessivos e perturbações comportamentais relacionados. Medo é a resposta emocional a ameaça iminente real ou percebida, enquanto ansiedade é a antecipação de ameaça futura.",
+
+    "TAG": {
+      "nome_completo": "Transtorno de Ansiedade Generalizada",
+      "codigo_cid": "F41.1",
+      "criterios": {
+        "A": {
+          "descricao": "Ansiedade e preocupação excessivas (expectativa apreensiva), ocorrendo na maioria dos dias por pelo menos seis meses, com diversos eventos ou atividades (tais como desempenho escolar ou profissional).",
+          "palavras_chave_anamnese": ["preocupação", "ansiedade", "apreensão", "nervosismo", "medo constante", "preocupação excessiva", "vários assuntos", "trabalho", "família", "saúde", "dinheiro"]
+        },
+        "B": {
+          "descricao": "O indivíduo considera difícil controlar a preocupação.",
+          "palavras_chave_anamnese": ["difícil controlar", "não consigo parar de pensar", "pensamentos intrusivos", "ruminação", "não consigo relaxar"]
+        },
+        "C": {
+          "descricao": "A ansiedade e a preocupação estão associadas com três (ou mais) dos seguintes seis sintomas (com pelo menos alguns deles presentes na maioria dos dias nos últimos seis meses).",
+          "sintomas": {
+            "C1": {
+              "descricao": "Inquietação ou sensação de estar com os nervos à flor da pele.",
+              "palavras_chave_anamnese": ["inquieto", "agitado", "nervos à flor da pele", "não consigo ficar parado", "tenso"]
+            },
+            "C2": {
+              "descricao": "Fatigabilidade.",
+              "palavras_chave_anamnese": ["cansaço", "fadiga", "esgotamento", "sem energia", "cansado facilmente"]
+            },
+            "C3": {
+              "descricao": "Dificuldade em concentrar-se ou sensações de 'branco' na mente.",
+              "palavras_chave_anamnese": ["concentração", "dificuldade de foco", "branco na mente", "esquecimento", "distraído"]
+            },
+            "C4": {
+              "descricao": "Irritabilidade.",
+              "palavras_chave_anamnese": ["irritado", "irritável", "impaciente", "explodo fácil", "intolerante"]
+            },
+            "C5": {
+              "descricao": "Tensão muscular.",
+              "palavras_chave_anamnese": ["tensão muscular", "dor muscular", "dor nas costas", "ombros tensos", "rigidez", "bruxismo"]
+            },
+            "C6": {
+              "descricao": "Perturbação do sono (dificuldade em conciliar ou manter o sono, ou sono insatisfatório e inquieto).",
+              "palavras_chave_anamnese": ["insônia", "dificuldade para dormir", "sono ruim", "acordo no meio da noite", "sono inquieto", "não descanso"]
+            }
+          },
+          "minimo_necessario": 3,
+          "nota": "Apenas um dos itens é necessário para crianças."
+        },
+        "D": {
+          "descricao": "A ansiedade, a preocupação ou os sintomas físicos causam sofrimento clinicamente significativo ou prejuízo no funcionamento social, profissional ou em outras áreas importantes da vida do indivíduo.",
+          "palavras_chave_anamnese": ["prejudica trabalho", "afeta relacionamentos", "não consigo funcionar", "sofrimento", "impacto na vida"]
+        },
+        "E": {
+          "descricao": "A perturbação não é atribuível aos efeitos fisiológicos de uma substância ou a outra condição médica.",
+          "palavras_chave_anamnese": ["medicamentos", "drogas", "álcool", "cafeína", "tireoide", "condição médica"]
+        },
+        "F": {
+          "descricao": "A perturbação não é mais bem explicada por outro transtorno mental.",
+          "palavras_chave_anamnese": ["diagnóstico diferencial"]
+        }
+      },
+      "caracteristicas_associadas": [
+        "Tremores, contrações, abalos e dores musculares",
+        "Nervosismo ou irritabilidade associados a tensão muscular",
+        "Sintomas somáticos (sudorese, náusea, diarreia)",
+        "Resposta de sobressalto exagerada",
+        "Síndrome do intestino irritável e cefaleia frequentemente acompanham o transtorno"
+      ],
+      "prevalencia": "2,9% entre adultos na comunidade geral",
+      "idade_media_inicio": 35
+    },
+
+    "transtorno_de_panico": {
+      "nome_completo": "Transtorno de Pânico",
+      "codigo_cid": "F41.0",
+      "criterios": {
+        "A": {
+          "descricao": "Ataques de pânico recorrentes e inesperados. Um ataque de pânico é um surto abrupto de medo intenso ou desconforto intenso que alcança um pico em minutos e durante o qual ocorrem quatro (ou mais) dos seguintes sintomas.",
+          "sintomas": {
+            "A1": "Palpitações, coração acelerado ou taquicardia.",
+            "A2": "Sudorese.",
+            "A3": "Tremores ou abalos.",
+            "A4": "Sensações de falta de ar ou sufocamento.",
+            "A5": "Sensações de asfixia.",
+            "A6": "Dor ou desconforto torácico.",
+            "A7": "Náusea ou desconforto abdominal.",
+            "A8": "Sensação de tontura, instabilidade, vertigem ou desmaio.",
+            "A9": "Calafrios ou ondas de calor.",
+            "A10": "Parestesias (anestesia ou sensações de formigamento).",
+            "A11": "Desrealização (sensações de irrealidade) ou despersonalização (sensação de estar distanciado de si mesmo).",
+            "A12": "Medo de perder o controle ou 'enlouquecer'.",
+            "A13": "Medo de morrer."
+          },
+          "minimo_sintomas": 4
+        },
+        "B": {
+          "descricao": "Pelo menos um dos ataques foi seguido de um mês (ou mais) de uma ou de ambas as seguintes características:",
+          "B1": "Apreensão ou preocupação persistente acerca de ataques de pânico adicionais ou sobre suas consequências.",
+          "B2": "Uma mudança mal-adaptativa significativa no comportamento relacionada aos ataques."
+        },
+        "C": {
+          "descricao": "A perturbação não é consequência dos efeitos fisiológicos de uma substância ou de outra condição médica."
+        },
+        "D": {
+          "descricao": "A perturbação não é mais bem explicada por outro transtorno mental."
+        }
+      },
+      "prevalencia": "2 a 3% em adultos e adolescentes",
+      "idade_media_inicio": "20 a 24 anos"
+    },
+
+    "transtorno_de_ansiedade_social": {
+      "nome_completo": "Transtorno de Ansiedade Social (Fobia Social)",
+      "codigo_cid": "F40.10",
+      "criterios": {
+        "A": {
+          "descricao": "Medo ou ansiedade acentuados acerca de uma ou mais situações sociais em que o indivíduo é exposto a possível avaliação por outras pessoas.",
+          "exemplos": ["interações sociais", "ser observado comendo ou bebendo", "situações de desempenho diante de outros"]
+        },
+        "B": {
+          "descricao": "O indivíduo teme agir de forma a demonstrar sintomas de ansiedade que serão avaliados negativamente (humilhação, constrangimento, rejeição, ofensa)."
+        },
+        "C": {
+          "descricao": "As situações sociais quase sempre provocam medo ou ansiedade."
+        },
+        "D": {
+          "descricao": "As situações sociais são evitadas ou suportadas com intenso medo ou ansiedade."
+        },
+        "E": {
+          "descricao": "O medo ou ansiedade é desproporcional à ameaça real apresentada pela situação social e o contexto sociocultural."
+        },
+        "F": {
+          "descricao": "O medo, ansiedade ou esquiva é persistente, geralmente durando mais de seis meses."
+        },
+        "G": {
+          "descricao": "O medo, ansiedade ou esquiva causa sofrimento clinicamente significativo ou prejuízo no funcionamento."
+        },
+        "H": {
+          "descricao": "O medo, ansiedade ou esquiva não é consequência dos efeitos fisiológicos de uma substância ou de outra condição médica."
+        },
+        "I": {
+          "descricao": "O medo, ansiedade ou esquiva não é mais bem explicado pelos sintomas de outro transtorno mental."
+        },
+        "J": {
+          "descricao": "Se outra condição médica está presente, o medo, ansiedade ou esquiva é claramente não relacionado ou é excessivo."
+        }
+      },
+      "especificador": "Somente desempenho: se o medo está restrito à fala ou ao desempenhar em público.",
+      "prevalencia": "7% nos EUA",
+      "idade_media_inicio": 13
+    },
+
+    "fobia_especifica": {
+      "nome_completo": "Fobia Específica",
+      "codigo_cid": "F40.2xx",
+      "criterios": {
+        "A": "Medo ou ansiedade acentuados acerca de um objeto ou situação.",
+        "B": "O objeto ou situação fóbica quase invariavelmente provoca uma resposta imediata de medo ou ansiedade.",
+        "C": "O objeto ou situação fóbica é ativamente evitado ou suportado com intensa ansiedade ou sofrimento.",
+        "D": "O medo ou ansiedade é desproporcional em relação ao perigo real.",
+        "E": "O medo, ansiedade ou esquiva é persistente, geralmente durando mais de seis meses.",
+        "F": "O medo, ansiedade ou esquiva causa sofrimento clinicamente significativo ou prejuízo.",
+        "G": "A perturbação não é mais bem explicada pelos sintomas de outro transtorno mental."
+      },
+      "subtipos": ["Animal", "Ambiente natural", "Sangue-injeção-ferimentos", "Situacional", "Outro"],
+      "prevalencia": "8 a 12%",
+      "idade_media_inicio": 10
+    },
+
+    "agorafobia": {
+      "nome_completo": "Agorafobia",
+      "codigo_cid": "F40.00",
+      "criterios": {
+        "A": {
+          "descricao": "Medo ou ansiedade marcantes acerca de duas (ou mais) das cinco situações seguintes:",
+          "situacoes": [
+            "Uso de transporte público",
+            "Permanecer em espaços abertos",
+            "Permanecer em locais fechados",
+            "Permanecer em uma fila ou ficar em meio a uma multidão",
+            "Sair de casa sozinho"
+          ]
+        },
+        "B": "O indivíduo tem medo ou evita essas situações devido a pensamentos de que pode ser difícil escapar ou de que o auxílio pode não estar disponível.",
+        "C": "As situações agorafóbicas quase sempre provocam medo ou ansiedade.",
+        "D": "As situações agorafóbicas são ativamente evitadas, requerem a presença de uma companhia ou são suportadas com intenso medo ou ansiedade.",
+        "E": "O medo ou ansiedade é desproporcional ao perigo real.",
+        "F": "O medo, ansiedade ou esquiva é persistente, geralmente durando mais de seis meses.",
+        "G": "O medo, ansiedade ou esquiva causa sofrimento clinicamente significativo ou prejuízo.",
+        "H": "Se outra condição médica está presente, o medo, ansiedade ou esquiva é claramente excessivo.",
+        "I": "O medo, ansiedade ou esquiva não é mais bem explicado pelos sintomas de outro transtorno mental."
+      },
+      "prevalencia": "1 a 1,7%",
+      "idade_media_inicio": 21
+    }
+  }
+}
